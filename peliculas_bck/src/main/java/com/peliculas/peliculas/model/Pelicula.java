@@ -1,12 +1,19 @@
 package com.peliculas.peliculas.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Pelicula implements Serializable {
@@ -27,16 +34,21 @@ public class Pelicula implements Serializable {
     @Column(name = "presupuesto", nullable = true, scale = 2)
     private Double presupuesto;
 
-    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(name = "pelicula_actor", joinColumns = @JoinColumn(name = "pelicula_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"))
+    private Set<Actor> actores = new HashSet<>();
+
+
     public Pelicula() {
     }
 
-    public Pelicula(Long id, String titulo, Long anio, String trama, Double presupuesto) {
+    public Pelicula(Long id, String titulo, Long anio, String trama, Double presupuesto, Set<Actor> actores) {
         this.id = id;
         this.titulo = titulo;
         this.anio = anio;
         this.trama = trama;
         this.presupuesto = presupuesto;
+        this.actores = actores;
     }
 
     public Long getId() {
@@ -79,6 +91,14 @@ public class Pelicula implements Serializable {
         this.presupuesto = presupuesto;
     }
 
+    public Set<Actor> getActores() {
+        return actores;
+    }
+
+    public void setActores(Set<Actor> actores) {
+        this.actores = actores;
+    }
+    
     @Override
     public String toString() {
         return "Película{" +

@@ -2,6 +2,7 @@ package com.peliculas.peliculas.resource;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.peliculas.peliculas.model.Actor;
 import com.peliculas.peliculas.model.Pelicula;
+import com.peliculas.peliculas.repository.ActorRepository;
 import com.peliculas.peliculas.service.PeliculaService;
 
 @RestController
@@ -21,6 +24,8 @@ import com.peliculas.peliculas.service.PeliculaService;
 public class PeliculaResource {
     private final PeliculaService peliculaService;
 
+    @Autowired
+    private ActorRepository actorRepository;
     
     public PeliculaResource(PeliculaService peliculasService) {
         this.peliculaService = peliculasService;
@@ -40,6 +45,18 @@ public class PeliculaResource {
 
     @PostMapping("/add")
     public ResponseEntity<Pelicula> addPelicula(@RequestBody Pelicula pelicula) {
+        for (Actor actor : pelicula.getActores()) {
+            // Busca el actor en la base de datos por su ID o nombre, por ejemplo, usando el ActorRepository.
+            Actor existingActor = actorRepository.findById(actor.getId()).orElse(null);
+            if (existingActor != null) {
+                // Actualiza la referencia del actor en la película con el actor existente.
+                actor = existingActor;
+            } else {
+                // Manejar el caso en el que el actor no existe en la base de datos.
+                // Puedes lanzar una excepción, devolver un error, o realizar alguna acción personalizada.
+                // Aquí, asumiré que los actores no existentes se agregarán a la película.
+            }
+        }
         Pelicula newpPelicula = peliculaService.addPelicula(pelicula);
         return new ResponseEntity<>(newpPelicula, HttpStatus.CREATED);
     }
