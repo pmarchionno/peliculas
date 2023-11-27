@@ -1,5 +1,6 @@
 package com.peliculas.peliculas.resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class PeliculaResource {
 
     @Autowired
     private ActorRepository actorRepository;
-    
+
     public PeliculaResource(PeliculaService peliculasService) {
         this.peliculaService = peliculasService;
     }
@@ -38,7 +39,7 @@ public class PeliculaResource {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Pelicula> getpeliclaById (@PathVariable("id") Long id) {
+    public ResponseEntity<Pelicula> getPeliculaById(@PathVariable("id") Long id) {
         Pelicula pelicula = peliculaService.findPeliculaById(id);
         return new ResponseEntity<>(pelicula, HttpStatus.OK);
     }
@@ -46,14 +47,16 @@ public class PeliculaResource {
     @PostMapping("/add")
     public ResponseEntity<Pelicula> addPelicula(@RequestBody Pelicula pelicula) {
         for (Actor actor : pelicula.getActores()) {
-            // Busca el actor en la base de datos por su ID o nombre, por ejemplo, usando el ActorRepository.
+            // Busca el actor en la base de datos por su ID o nombre, por ejemplo, usando el
+            // ActorRepository.
             Actor existingActor = actorRepository.findById(actor.getId()).orElse(null);
             if (existingActor != null) {
                 // Actualiza la referencia del actor en la película con el actor existente.
                 actor = existingActor;
             } else {
                 // Manejar el caso en el que el actor no existe en la base de datos.
-                // Puedes lanzar una excepción, devolver un error, o realizar alguna acción personalizada.
+                // Puedes lanzar una excepción, devolver un error, o realizar alguna acción
+                // personalizada.
                 // Aquí, asumiré que los actores no existentes se agregarán a la película.
             }
         }
@@ -71,5 +74,23 @@ public class PeliculaResource {
     public ResponseEntity<?> deletePelicula(@PathVariable("id") Long id) {
         peliculaService.deletePelicula(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/filmsByActor/{name}")
+    public ResponseEntity<List<Pelicula>> getpeliculaByActorName(@PathVariable("name") String name) {
+        List<Pelicula> peliculas = new ArrayList<>(); // peliculaService.findPeliculaByActorName(name);
+        peliculas = peliculaService.findPeliculaByActorName(name);
+        return new ResponseEntity<>(peliculas, HttpStatus.OK);
+
+        // List<Pelicula> peliculas = peliculaService.finAllPeliculas();
+        // return new ResponseEntity<>(peliculas, HttpStatus.OK);
+
+        // return null;
+    }
+
+    @GetMapping("/actoresFilm/{id}")
+    public ResponseEntity<List<Actor>> getActoresByPeliculaId(@PathVariable("id") Long id) {
+        Pelicula pelicula = peliculaService.findPeliculaById(id);
+        return new ResponseEntity<>(pelicula.getActores(), HttpStatus.OK);
     }
 }

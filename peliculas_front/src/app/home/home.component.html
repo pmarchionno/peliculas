@@ -1,0 +1,95 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" style="color:white;">Administrador de Películas</a>
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+        aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button> -->
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <!-- <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" (click)="onOpenModal(nullPelicula, 'add')">Nuevo Película<span
+                        class="sr-only">(current)</span></a>
+            </li>
+        </ul> -->
+        <!-- <form id="form1" name="form1" class="form-inline my-2 my-lg-0">
+            <input type="search" name="search" (ngModelChange)="searchPeliculas(key.value)" #key="ngModel" ngModel
+                titulo="key" id="searchName" class="form-control mr-sm-2" placeholder="Buscar Películas..." required>
+        </form> -->
+    </div>
+</nav>
+
+<div class="container" id="main-container">
+    <div class="row">
+        <div *ngFor="let pelicula of peliculasList" class="col-md-6 col-xl-3">
+            <div class="card m-b-30">
+                <div class="card-body row">
+                    <div class="col-6">
+                        <!-- <a href=""><img src="{{pelicula?.imageUrl}}" alt="" class="img-fluid rounded-circle w-60"></a> -->
+                    </div>
+                    <div class="col-6 card-title align-self-center mb-0">
+                        <h5>{{pelicula?.titulo}}</h5>
+                        <p class="m-0">Año: {{pelicula?.anio}}</p>
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i clamess="fa fa-envelope float-right"></i>Trama: {{pelicula?.trama}}
+                    </li>
+                    <li class="list-group-item"><i class="fa fa-presupuesto float-right"></i>Presupuesto :
+                        {{pelicula?.presupuesto}}</li>
+                </ul>
+                <div class="card-body">
+                    <div class="float-right btn-group btn-group-sm">
+                        <a (click)="onOpenModal(pelicula, 'edit')" class="btn btn-primary tooltips" data-placement="top"
+                            data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                        <a (click)="onOpenModal(pelicula, 'delete')" class="btn btn-secondary tooltips"
+                            data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <h5>Actores</h5>
+            <div *ngFor="let actor of pelicula.actores" class="col-md-6 col-xl-3">
+                <div class="col-6 card-title align-self-center mb-0">
+                    <p class="m-0" *ngIf="actor?.name">{{actor?.name}}</p>
+                    <p class="m-0" *ngIf="!actor?.name">{{getActorName(actor)}}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Nueva Pelicula -->
+    <!-- <div class="modal fade" id="addPeliculaModal" tabindex="-1" role="dialog" aria-labelledby="addPeliculaModalLabel"
+       aria-hidden="true">
+       <div class="modal-dialog" role="document">
+          <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title" id="addPeliculaModalLabel">Nueva Película</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                </button>
+             </div>
+             <div class="modal-body">
+                <form #addForm="ngForm" (ngSubmit)="onAddEmloyee(addForm)">
+                   <input type="text" name="titulo" placeholder="Título" ngModel>
+                   <br><br>
+                   <input type="number" name="anio" placeholder="Año" ngModel>
+                   <br><br>
+                   <input type="text" name="trama" placeholder="Trama" ngModel>
+                   <br><br>
+                   <button type="submit">Guardar</button>
+                </form>
+             </div>
+          </div>
+       </div>
+    </div> -->
+
+    <!-- Notification for no peliculas -->
+    <div *ngIf="peliculasList?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">NO HAY EMPLEADOS!</h4>
+            <p>Película no encontrado</p>
+        </div>
+    </div>
+
+    

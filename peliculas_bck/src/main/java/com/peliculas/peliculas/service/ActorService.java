@@ -23,7 +23,7 @@ public class ActorService {
         return actorRepository.save(actor);
     }
 
-    public List<Actor> finAllActors() {
+    public List<Actor> finAllActores() {
         return actorRepository.findAll();
     }
 

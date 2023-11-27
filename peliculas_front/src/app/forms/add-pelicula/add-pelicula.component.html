@@ -1,0 +1,102 @@
+<h1>Registrar Nueva Película</h1>
+
+
+<!-- <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <input type="text" name="titulo" placeholder="Título" [(ngModel)]="pelicula.titulo">
+    <br><br>
+    <input type="number" name="anio" placeholder="Año" [(ngModel)]="pelicula.anio">
+    <br><br>
+    <input type="text" name="trama" placeholder="Trama" [(ngModel)]="pelicula.trama">
+    <br><br>
+    <input type="number" name="presupuesto" placeholder="Presupuesto" [(ngModel)]="pelicula.presupuesto">
+    <br><br>
+  
+    <div class="d-grid">
+        <select class="custom-select mb-3" (change)="changeActor($event)">
+            <option value="">Sin Selección</option>
+            <option *ngFor="let actor of actoresList" [value]="actor.id">
+                {{ actor.name }}
+            </option>
+        </select>
+        
+        <button type="submit" class="btn btn-danger btn-lg btn-block">
+            Submit
+        </button>
+    </div>
+    <button type="submit">Guardar</button>
+</form> -->
+
+<h2>Vista previa:</h2>
+{{ pelicula | json }}
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="col-lg">
+        <label for="">Titulo</label>
+        <input formControlName="titulo" type="text" [(ngModel)]="pelicula.titulo" placeholder="Titulo">
+        <div class="text-danger"
+            *ngIf="myForm.get('titulo')?.errors && (myForm.get('titulo')?.dirty || myForm.get('titulo')?.touched)">
+            <p *ngIf="myForm.get('titulo')?.hasError('required')">El campo Titulo es requerido</p>
+        </div>
+    </div>
+
+    <div class="col-lg">
+        <label>Año</label>
+        <input formControlName="anio" type="text" [(ngModel)]="pelicula.anio" placeholder="Año">
+        <div class="text-danger" *ngIf="myForm.get('anio')?.errors && myForm.get('anio')?.dirty">
+            <p *ngIf="myForm.get('anio')?.hasError('required')">El campo Año es requerido</p>
+            <p *ngIf="myForm.get('anio')?.hasError('minlength')">El campo Año debe ser de 11 dígitos</p>
+            <p *ngIf="myForm.get('anio')?.hasError('maxlength')">El campo Año debe ser de 11 dígitos</p>
+        </div>
+    </div>
+
+    <div class="col-lg">
+        <label>Trama</label>
+        <input formControlName="trama" type="text" [(ngModel)]="pelicula.trama" placeholder="Trama">
+        <div class="text-danger" *ngIf="myForm.get('trama')?.errors && myForm.get('trama')?.dirty">
+            <p *ngIf="myForm.get('trama')?.hasError('required')">El campo Trama es requerido</p>
+        </div>
+    </div>
+
+    <div class="col-lg">
+        <label>Presupuesto</label>
+        <input formControlName="presupuesto" type="text" [(ngModel)]="pelicula.presupuesto" placeholder="Presupuesto">
+        <div class="text-danger" *ngIf="myForm.get('presupuesto')?.errors && myForm.get('presupuesto')?.dirty">
+            <p *ngIf="myForm.get('presupuesto')?.hasError('required')">El campo Presupuesto es requerido</p>
+        </div>
+    </div>
+
+
+    <div class="d-grid">
+        <select class="custom-select mb-3" (change)="changeActor($event)" formControlName="actores">
+            <option value="">Choose Actor</option>
+            <option *ngFor="let actor of actoresList" [value]="actor.id">
+                {{ actor.name }}
+            </option>
+        </select>
+        <div class="text-danger" *ngIf="myForm.get('actores')?.errors && myForm.get('actores')?.dirty">
+            <p *ngIf="myForm.get('actores')?.hasError('required')">Seleccione al menos un Actor</p>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-danger btn-lg btn-block">
+        Submit
+    </button>
+
+    <!-- <div class="col-lg">
+        <label for="selectGrupo">Grupo</label>
+        <select formControlName="grupo" id="selectGrupo" [(ngModel)]="pelicula.grupo">
+            <option *ngFor="let grupo of grupos" value="{{grupo.id}}">{{grupo.nombre}}</option>
+        </select>
+        <div class="text-danger" *ngIf="myForm.get('grupo')?.errors && myForm.get('grupo')?.dirty">
+            <p *ngIf="myForm.get('grupo')?.hasError('required')">El campo Grupo es requerido</p>
+        </div>
+    </div> -->
+
+    <!-- <div class="form-group">
+        <label>Imagen</label>
+        <input formControlName="imagen" type="file" class="form-control" name="imagen" (change)="onChange($event)">
+    </div>
+    <img class="imagen" src={{pelicula.imagen}} alt="Imagen de {{pelicula.nombre}}">
+
+    <button type="submit" [disabled]="myForm.invalid">Guardar</button> -->
+</form>

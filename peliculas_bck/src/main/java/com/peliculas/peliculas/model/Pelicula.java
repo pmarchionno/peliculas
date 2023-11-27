@@ -1,8 +1,13 @@
 package com.peliculas.peliculas.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,6 +21,11 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+property = "id",
+scope = Pelicula.class)
+// @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "id")
+// @JsonFilter("actorFilter")
 public class Pelicula implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,13 +46,13 @@ public class Pelicula implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "pelicula_actor", joinColumns = @JoinColumn(name = "pelicula_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"))
-    private Set<Actor> actores = new HashSet<>();
-
+    // @JsonManagedReference(value = "pelicula_actor")
+    private List<Actor> actores = new ArrayList<>();
 
     public Pelicula() {
     }
 
-    public Pelicula(Long id, String titulo, Long anio, String trama, Double presupuesto, Set<Actor> actores) {
+    public Pelicula(Long id, String titulo, Long anio, String trama, Double presupuesto, List<Actor> actores) {
         this.id = id;
         this.titulo = titulo;
         this.anio = anio;
@@ -91,14 +101,14 @@ public class Pelicula implements Serializable {
         this.presupuesto = presupuesto;
     }
 
-    public Set<Actor> getActores() {
+    public List<Actor> getActores() {
         return actores;
     }
 
-    public void setActores(Set<Actor> actores) {
+    public void setActores(List<Actor> actores) {
         this.actores = actores;
     }
-    
+
     @Override
     public String toString() {
         return "Película{" +

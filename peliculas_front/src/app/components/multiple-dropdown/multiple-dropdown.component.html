@@ -1,0 +1,22 @@
+<div>
+    getFilteredList: {{filteredList}}
+    <h1>Paises y sus Capitales</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Id</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let item of filteredList">
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.id }}</td>
+                <td>{{filteredList?.length}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
