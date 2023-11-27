@@ -14,6 +14,4 @@ public interface ActorRepository extends JpaRepository<Actor, Long> {
     public Optional<Actor> findByName(String titlo);
 
     void deleteActorById(Long id);
-
-    // public Set<Pelicula> findPeliculasByActorByName(String nombreActor);
 }

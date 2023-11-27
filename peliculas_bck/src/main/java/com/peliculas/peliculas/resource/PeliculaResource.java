@@ -1,6 +1,5 @@
 package com.peliculas.peliculas.resource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,18 +73,5 @@ public class PeliculaResource {
     public ResponseEntity<?> deletePelicula(@PathVariable("id") Long id) {
         peliculaService.deletePelicula(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/filmsByActor/{name}")
-    public ResponseEntity<List<Pelicula>> getpeliculaByActorName(@PathVariable("name") String name) {
-        List<Pelicula> peliculas = new ArrayList<>(); // peliculaService.findPeliculaByActorName(name);
-        peliculas = peliculaService.findPeliculaByActorName(name);
-        return new ResponseEntity<>(peliculas, HttpStatus.OK);
-    }
-
-    @GetMapping("/actoresFilm/{id}")
-    public ResponseEntity<List<Actor>> getActoresByPeliculaId(@PathVariable("id") Long id) {
-        Pelicula pelicula = peliculaService.findPeliculaById(id);
-        return new ResponseEntity<>(pelicula.getActores(), HttpStatus.OK);
     }
 }
