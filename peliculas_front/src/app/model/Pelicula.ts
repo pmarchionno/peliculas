@@ -7,7 +7,6 @@ export class Pelicula {
   trama!: string;
   presupuesto!: number;
   actores!: Array<Actor>;
-  actoresDetailList!: Actor[];
 
   Pelicula() { }
 }

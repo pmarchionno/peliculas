@@ -81,11 +81,6 @@ public class PeliculaResource {
         List<Pelicula> peliculas = new ArrayList<>(); // peliculaService.findPeliculaByActorName(name);
         peliculas = peliculaService.findPeliculaByActorName(name);
         return new ResponseEntity<>(peliculas, HttpStatus.OK);
-
-        // List<Pelicula> peliculas = peliculaService.finAllPeliculas();
-        // return new ResponseEntity<>(peliculas, HttpStatus.OK);
-
-        // return null;
     }
 
     @GetMapping("/actoresFilm/{id}")

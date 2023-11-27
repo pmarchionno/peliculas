@@ -17,13 +17,11 @@ export class HomeComponent {
   public editPelicula!: Pelicula;
   public deletePelicula?: Pelicula | undefined;
   public nullPelicula!: Pelicula;
-  actoresList!: Actor[];
 
   constructor(private peliculaService: PeliculaService) { }
 
   ngOnInit() {
     this.getPeliculas();
-    this.getActores();
   }
 
   public getPeliculas(): void {
@@ -33,10 +31,8 @@ export class HomeComponent {
       // this.peliculasList = dato;
       dato.forEach(el => {
         this.getPeliculaById(el.id)
-        // this.peliculasList.push(this.getPeliculaById(el.id))
         console.log(this.peliculasList.length)
       })
-      // this.peliculasList.forEach(el => el.actoresDetailList = this.getActoresPelicula(el.id))
     })
   }
 
@@ -47,14 +43,6 @@ export class HomeComponent {
       myPelicula = dato;
     });
     return myPelicula;
-  }
-
-  getActoresPelicula(id: number): Actor[] {
-    let arr: Actor[];
-    this.peliculaService.getActoresPelicula(id).subscribe((dato) => {
-      return dato;
-    })
-    return [];
   }
 
   public onAddEmloyee(addForm: NgForm): void {
@@ -130,26 +118,5 @@ export class HomeComponent {
     }
     container?.appendChild(button);
     button.click();
-  }
-
-  public getActores(): void {
-    this.peliculaService.getActores().subscribe((dato) => {
-      this.actoresList = dato;
-    })
-  }
-
-  public getActorName(actor: Actor): String {
-    let name: String;
-    if (actor.name) {
-      return actor.name;
-    } else {
-      let actorId = this.actoresList.find(el => el == actor)?.name;
-      name = "actorId";
-      // this.actoresList = this.actoresList.find(el => el == actor);
-    }
-    if (name)
-      return name;
-    else
-      return ""
   }
 }

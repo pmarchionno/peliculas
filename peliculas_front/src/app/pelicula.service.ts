@@ -34,12 +34,6 @@ export class PeliculaService {
     return this.http.delete<void>(`${this.apiServerUrl}/delete/${peliculaId}`);
   }
 
-  public getActoresPelicula(peliculaId: number): Observable<Actor[]>{
-    return this.http.get<Actor[]>(`${this.apiServerUrl}/actoresFilm/${peliculaId}`);
-
-    // return new Array<Actor>
-  }
-
   resetDataFormPelicula(): Pelicula {
     return new Pelicula;
   }

@@ -33,14 +33,13 @@ export class AddPeliculaComponent implements OnInit {
       false;
     } else {
       console.log(JSON.stringify(this.myForm.value));
-      this.peliculaService.addPelicula(this.pelicula);
-      //this.pelicula = this.peliculaService.resetDataFormPelicula();
-      //this.goBackToHome();
+      
       this.peliculaService.addPelicula(this.pelicula).subscribe(
         (response: Pelicula) => {
           console.log(response);
-          // this.getEmployees();
-          // this.myForm.reset();
+          this.myForm.reset();
+          this.pelicula = this.peliculaService.resetDataFormPelicula();
+          this.goBackToHome();
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
@@ -63,14 +62,11 @@ export class AddPeliculaComponent implements OnInit {
   changeActor(e: any) {
     if (e.target.value) {
       this.actorSelected = e.target.value;
-      const mySet = new Array<Actor>(); //new Set([e.target.value])
+      const mySet = new Array<Actor>();
       let myActor: Actor = new Actor;
       myActor.setId(e.target.value);
       mySet.push(myActor);
-      // mySet.push({ "id": this.actorSelected });
-      this.pelicula.actores = mySet; // new Set([this.actorSelected]);
-      console.log("Values: " + e.target.value + " ----- " + this.actorSelected + " ----------- " + this.pelicula.actores.length)
-      mySet.forEach((el, index) => console.log(index + " - " + el.id))
+      this.pelicula.actores = mySet;
     }
     else {
       this.actorSelected = null;
@@ -83,7 +79,6 @@ export class AddPeliculaComponent implements OnInit {
     anio: ['', [Validators.required, Validators.minLength(1)]],
     trama: ['', [Validators.required]],
     presupuesto: ['', [Validators.required]],
-    // actorSelected: ['', [Validators.required]],
-    actores: ['', []]
+    actores: ['', [Validators.required]]
   });
 }

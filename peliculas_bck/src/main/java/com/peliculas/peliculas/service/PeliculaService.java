@@ -27,7 +27,6 @@ public class PeliculaService {
     ActorRepository actorRepository;
 
     public Pelicula addPelicula(Pelicula pelicula) {
-        System.out.println("AddPelicula Service");
         return peliculasRepository.save(pelicula);
     }
 

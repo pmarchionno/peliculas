@@ -1,0 +1,7 @@
+.card{
+    border: darkgrey;
+    border-style: groove;
+    border-radius: 1px;
+    margin: 10px;
+    padding: 0 15px 0 15px;
+}
