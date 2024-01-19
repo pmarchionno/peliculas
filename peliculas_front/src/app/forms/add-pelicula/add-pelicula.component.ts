@@ -76,7 +76,7 @@ export class AddPeliculaComponent implements OnInit {
 
   myForm = this.fb.group({
     titulo: ['', [Validators.required]],
-    anio: ['', [Validators.required, Validators.minLength(1)]],
+    anio: ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
     trama: ['', [Validators.required]],
     presupuesto: ['', [Validators.required]],
     actores: ['', [Validators.required]]

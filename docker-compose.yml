@@ -1,0 +1,17 @@
+version: '1'
+
+services:
+  peliculas_front:
+    container_name: peliculas_front
+    restart: always
+    build: ./peliculas_front
+    ports:
+      - "4200:4200"
+
+  peliculas_bck:
+    container_name: peliculas_bck
+    restart: always
+    build: ./peliculas-bck
+    ports:
+      - "8080:8080"
+
